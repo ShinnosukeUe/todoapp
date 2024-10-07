@@ -1,47 +1,77 @@
 <template>
   <!-- リアクティブなコードにサンプル -->
-  <div>
-      <p>{{ counter }}</p>
-      <button id="count_up" @click="countUp()" type="button">count</button>
-  </div>
 
-  <br/>
+  <br />
   <div>
-      <!-- TODO - ここにtitleを入れる -->
-      <input class="input" type="text"> 
-      <!-- TODO - ここにbodyを入れる -->
-      <input class="input" type="text">
-      <!-- TODO - handleSubmitをクリックしたときに、TODOタスクをtodolistに追加する -->
-      <button id="count_up" @click="handleSubmit()" type="button">submit</button>
+    <h1>UeToDo</h1>
+    <input v-model="title" placeholder="Enter task title" class="input" type="text">
+
+
+    <input v-model="body" placeholder="Enter task details" class="input" type="text">
+    <!-- TODO - handleSubmitをクリックしたときに、TODOタスクをtodolistに追加する -->
+    <ul>
+      <li v-for="task in todolist" :key="task.id">
+
+        <strong>{{ task.title }}</strong>:{{ task.body }}
+        <span>({{ task.isComplete ? 'Completed' : 'Not Completed' }})</span>
+        <button @click="toggleCompletion(task.id)">
+          {{ task.isComplete ? 'Mark as Not Completed' : 'Mark as Completed' }}
+        </button>
+        <button @click="handleDelete(task.id)">Delete</button>
+      </li>
+    </ul>
+    <button id="count_up" @click="handleSubmit()" type="button">submit</button>
   </div>
 </template>
 <script setup lang="ts">
-interface Todo { // → 型定義もできてて素晴らしい👏
+interface Todo {
   id: number;
   title: string;
   isComplete: boolean;
   body: string;
 }
-let todolist = ref<Todo[]>([]) // これはとてもいい書き方です！👍
+let todolist = ref<Todo[]>([])
 
-let titele = ref('') // → titleの間違い？型はstring
+let title = ref('') // → 型はstring
 let body = ref('') // → 型はstring
-let nextTodo = ref(1) // → 型はnumber
+let nextTodoId = ref(1) // → 型はnumber
 
 const handleSubmit = () => {
-  todolist.unshift({
+
+  console.log('Title:', title.value)
+  console.log('Body:', body.value)
+
+  if (title.value.trim() && body.value.trim()) {
+    todolist.value.push({
       id: nextTodoId.value,
       title: title.value,
       body: body.value,
       isComplete: false
-  })
+    });
+    nextTodoId.value++;
+
+    console.log(todolist.value)
+
+    title.value = '';
+    body.value = '';
+  }
+
 }
 
-const counter = ref<number>(0)
-
-const countUp = () => {
-  counter.value++;
-}
+const handleDelete = (id: number) => {
+  console.log(id)
+  todolist.value = todolist.value.filter(task => task.id != id);
+};
+  // const index = todolist.value.findIndex(task => task.id === id);
+  // if (index !== -1){
+  //   todolist.value.splice(index, 1);
+  // }}
+const toggleCompletion = (id: number) => {
+  const task = todolist.value.find(task => task.id === id);
+  if (task) {
+    task.isComplete = !task.isComplete;
+  }
+};
 
 </script>
 <style scope>
@@ -66,4 +96,3 @@ const countUp = () => {
   border-color: black;
 }
 </style>
-

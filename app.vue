@@ -1,54 +1,19 @@
 <template>
   <!-- リアクティブなコードにサンプル -->
-  <!-- <div>
-    <p>{{ counter }}</p>
-    <button id="count_up" @click="countUp()" type="button">count</button>
-  </div> -->
-
-  <br />
   <div>
-    <!-- TODO - ここにtitleを入れる -->
-    <h1>UeToDo</h1>
-    <input class="input" type="text">
-    <!-- TODO - ここにbodyを入れる -->
-     <h2>add task</h2>
-    <input class="input" type="text">
-    <!-- TODO - handleSubmitをクリックしたときに、TODOタスクをtodolistに追加する -->
-    <form @submit.prevent="handleSubmit">
-      <input v-model="newTask" type="text" placeholder="input task"/>
-      <button type="submit">add</button>
-
-      <!-- <button type="submit">add</button> -->
-    </form>
-    <button id="count_up" @click="handleSubmit()" type="button">submit</button>
-    <ul>
-      <li v-for="(task,index) in todoList" :key="index">{{ task }}</li>
-
-    </ul>
+      <p>{{ counter }}</p>
+      <button id="count_up" @click="countUp()" type="button">count</button>
   </div>
 
- 
-
-  </script>
-  <script>
-  new Vue({
-    el:'#app',
-    data:{
-      newtask:'',
-      todolist:[]
-
-    },
-  
-    methods:{
-      handleSubmit(){
-        if(this.newTask.trim() !==''){
-          this.todoList.push(this.newTask);
-          this.newTask='';
-        }
-      }
-    }
-  }); 
-  </script>
+  <br/>
+  <div>
+      <!-- TODO - ここにtitleを入れる -->
+      <input class="input" type="text"> 
+      <!-- TODO - ここにbodyを入れる -->
+      <input class="input" type="text">
+      <!-- TODO - handleSubmitをクリックしたときに、TODOタスクをtodolistに追加する -->
+      <button id="count_up" @click="handleSubmit()" type="button">submit</button>
+  </div>
 </template>
 <script setup lang="ts">
 interface Todo { // → 型定義もできてて素晴らしい👏
@@ -59,16 +24,16 @@ interface Todo { // → 型定義もできてて素晴らしい👏
 }
 let todolist = ref<Todo[]>([]) // これはとてもいい書き方です！👍
 
-let title = ref('') // → titleの間違い？型はstring
+let titele = ref('') // → titleの間違い？型はstring
 let body = ref('') // → 型はstring
 let nextTodo = ref(1) // → 型はnumber
 
 const handleSubmit = () => {
   todolist.unshift({
-    id: nextTodoId.value,
-    title: title.value,
-    body: body.value,
-    isComplete: false
+      id: nextTodoId.value,
+      title: title.value,
+      body: body.value,
+      isComplete: false
   })
 }
 
@@ -101,3 +66,4 @@ const countUp = () => {
   border-color: black;
 }
 </style>
+

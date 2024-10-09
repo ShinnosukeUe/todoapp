@@ -20,7 +20,7 @@ export const useFirestore = () => {
             const docData = {
                 stringExample: "hello"
             };
-            await setDoc(doc(db, "data", "one"), docData);
+            await setDoc(doc(db, "data", "one"), todo);
         } catch (e) {
             console.error('Error adding document: ', e);
         }

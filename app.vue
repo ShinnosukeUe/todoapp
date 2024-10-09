@@ -4,9 +4,8 @@
   <br />
   <div>
     <h1>UeToDo</h1>
+
     <input v-model="title" placeholder="Enter task title" class="input" type="text">
-
-
     <input v-model="body" placeholder="Enter task details" class="input" type="text">
     <!-- TODO - handleSubmitをクリックしたときに、TODOタスクをtodolistに追加する -->
     <ul>
@@ -41,19 +40,24 @@ const handleSubmit = () => {
   console.log('Title:', title.value)
   console.log('Body:', body.value)
 
-  if (title.value.trim() && body.value.trim()) {
-    todolist.value.push({
+  const todo = {
       id: nextTodoId.value,
       title: title.value,
       body: body.value,
       isComplete: false
-    });
+    }
+
+  if (title.value.trim() && body.value.trim()) {
+    todolist.value.push(todo);
     nextTodoId.value++;
 
-    console.log(todolist.value)
+    const useTodo = useFirestore()
+    useTodo.addData(todo);
 
     title.value = '';
     body.value = '';
+
+    // TODO - todolistをFirestoreに登録するcomporsablesに記述した関数を呼び出す
   }
 
 }
@@ -62,10 +66,10 @@ const handleDelete = (id: number) => {
   console.log(id)
   todolist.value = todolist.value.filter(task => task.id != id);
 };
-  // const index = todolist.value.findIndex(task => task.id === id);
-  // if (index !== -1){
-  //   todolist.value.splice(index, 1);
-  // }}
+// const index = todolist.value.findIndex(task => task.id === id);
+// if (index !== -1){
+//   todolist.value.splice(index, 1);
+// }}
 const toggleCompletion = (id: number) => {
   const task = todolist.value.find(task => task.id === id);
   if (task) {

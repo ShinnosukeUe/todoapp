@@ -18,27 +18,31 @@ interface Todo {
 
 export const useFirestore = () => {
     const getData = async (todo: Todo) => {
-        //         try {
+        try{
+            const db = getFirestore();
+            const collectionRef = collection(db, "todos");
+            const snapshot = await getDocs(collectionRef);
 
-        //         const db = getFirestore();
+            const todos:Todo[]=[];
+            snapshot.forEach((doc)=>{
+                todos.push({...doc.data(), id: doc.id}as Todo);
+            });
+
+            return todos;
+        } catch(e){
+            console.error
+            return [];
+        }
 
 
-        //         const collectionRef = collection(db, "todos");
+            
 
-        //     const snapshot = await getDocs(collectionRef);
+        
+        
 
 
-        //         snapshot.docs.forEach((doc) => {
-        //                 console.log(doc.id, doc.data());
-        //             });
-        //         });
-        //         .catch((error) => {
-        //             console.log("Error getting documents:", error);
-        //         });
-
-        //     return {getData};
-        //     }
-    }
+    };
+    
 
 
 

@@ -48,7 +48,7 @@ const handleSubmit = () => {
       title: title.value,
       body: body.value,
       isComplete: false,
-      data:  ""
+      
     }
 
   if (title.value.trim() && body.value.trim()) {

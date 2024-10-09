@@ -7,7 +7,6 @@
 
     <input v-model="title" placeholder="Enter task title" class="input" type="text">
     <input v-model="body" placeholder="Enter task details" class="input" type="text">
-    <!-- TODO - handleSubmitをクリックしたときに、TODOタスクをtodolistに追加する -->
     <ul>
       <li v-for="task in todolist" :key="task.id">
 
@@ -37,6 +36,7 @@ let todolist = ref<Todo[]>([])
 let title = ref('') // → 型はstring
 let body = ref('') // → 型はstring
 let nextTodoId = ref(1) // → 型はnumber
+// let date = Timestamp
 
 const handleSubmit = () => {
 
@@ -44,10 +44,11 @@ const handleSubmit = () => {
   console.log('Body:', body.value)
 
   const todo = {
-      id: nextTodoId.value,
+      id:"",
       title: title.value,
       body: body.value,
-      isComplete: false
+      isComplete: false,
+      data:  ""
     }
 
   if (title.value.trim() && body.value.trim()) {

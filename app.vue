@@ -20,6 +20,9 @@
       </li>
     </ul>
     <button id="count_up" @click="handleSubmit()" type="button">submit</button>
+
+    
+
   </div>
 </template>
 <script setup lang="ts">

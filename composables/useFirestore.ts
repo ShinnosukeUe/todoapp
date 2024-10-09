@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getDoc, getFirestore, updateDoc } from "firebase/firestore";
 import { doc, setDoc } from "firebase/firestore";
 
 interface Todo {
@@ -17,10 +17,9 @@ export const useFirestore = () => {
             alert()
             const db = getFirestore();
 
-            const docData = {
-                stringExample: "hello"
-            };
-            await setDoc(doc(db, "data", "one"), todo);
+            
+            
+            await setDoc(doc(db, "todos", todo.id.toString()), todo);
         } catch (e) {
             console.error('Error adding document: ', e);
         }

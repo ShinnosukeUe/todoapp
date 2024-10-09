@@ -17,32 +17,32 @@ interface Todo {
 }
 
 export const useFirestore = () => {
-    const getData = async (todo: Todo) => {
-        try{
+    const getData = async () => {
+        try {
             const db = getFirestore();
             const collectionRef = collection(db, "todos");
             const snapshot = await getDocs(collectionRef);
 
-            const todos:Todo[]=[];
-            snapshot.forEach((doc)=>{
-                todos.push({...doc.data(), id: doc.id}as Todo);
+            const todos: Todo[] = [];
+            snapshot.forEach((doc) => {
+                todos.push({ ...doc.data(), id: doc.id } as Todo);
             });
 
             return todos;
-        } catch(e){
+        } catch (e) {
             console.error
             return [];
         }
 
 
-            
 
-        
-        
+
+
+
 
 
     };
-    
+
 
 
 

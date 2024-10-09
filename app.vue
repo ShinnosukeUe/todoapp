@@ -20,7 +20,7 @@
     </ul>
     <button id="count_up" @click="handleSubmit()" type="button">submit</button>
 
-    
+
 
   </div>
 </template>
@@ -38,24 +38,25 @@ let body = ref('') // → 型はstring
 let nextTodoId = ref(1) // → 型はnumber
 // let date = Timestamp
 
+const useTodo = useFirestore()
+
 const handleSubmit = () => {
 
   console.log('Title:', title.value)
   console.log('Body:', body.value)
 
   const todo = {
-      id:"",
-      title: title.value,
-      body: body.value,
-      isComplete: false,
-      
-    }
+    id: "",
+    title: title.value,
+    body: body.value,
+    isComplete: false,
+
+  }
 
   if (title.value.trim() && body.value.trim()) {
     todolist.value.push(todo);
     nextTodoId.value++;
 
-    const useTodo = useFirestore()
     useTodo.addData(todo);
 
     title.value = '';
@@ -80,7 +81,13 @@ const toggleCompletion = (id: number) => {
     task.isComplete = !task.isComplete;
   }
 };
+onMounted(() => {
+  // TODO - エラー出るので明日改善する
+  // const data = await useTodo.getData();
+  // todolist.value = data;
 
+  // console.log(data)
+})
 </script>
 <style scope>
 #count_up {
